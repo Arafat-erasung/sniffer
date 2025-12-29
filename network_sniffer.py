@@ -71,7 +71,19 @@ def packet_callback(packet):
         elif icmp_layer.type == 0:
               print(f"   Message:          Echo Request (Pong)")
 
-        
-  
+    #Display payload if available
+    if packet.haslayer(Raw):
+          payload = packet[Raw].load
+          print(f"\n📦 Payload Preview:")
+          try:
+                payload_text = payload.decode('utf-8', errors='ignore')[:100]
+                print(f"   {payload_text}")
+          except:
+                print(f"   {payload[:50].hex()}")
+    else:
+          print("⚠️  Non-IP Packet (ARP, etc.)")
+          print("="*70)            
+
+    
 
 
