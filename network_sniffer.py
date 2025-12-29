@@ -48,6 +48,17 @@ def packet_callback(packet):
                 print(f"   Service:          FTP (File Transfer)")
 
     #check for UDP
+    if packet.haslayer(UDP):
+        udp_layer = packet[UDP]
+        print(f"\n🟢 UDP Packet Detected")
+        print(f"   Source Port:      {udp_layer.sport}")
+        print(f"   Destination Port: {udp_layer.dport}")
+
+        if udp_layer.dport == 53 or udp_layer.sport == 53:
+              print(f"   Service:          DNS (Domain Name System)")
+        elif   udp_layer.dport == 67 or udp_layer.sport == 67:
+              print(f"   Service:          DHCP (Dynamic Host Config)")
+        
   
 
 
