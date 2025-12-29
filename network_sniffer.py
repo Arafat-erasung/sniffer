@@ -85,5 +85,36 @@ def packet_callback(packet):
           print("="*70)            
 
     
+def main():
+    """
+    Main function to start the network sniffer
+    """
+    print("\n" + "🔍 NETWORK SNIFFER STARTED".center(70, "="))
+    print("CodeAlpha Cybersecurity Internship - Task 1")
+    print("="*70)
+    print("\n⚠️  Note: Run this script with administrator/sudo privileges")
+    print("📌 Press Ctrl+C to stop sniffing\n")
+    print("Capturing packets...\n")
+    
+    try:
+        # Start sniffing
+        # count=0 means continuous sniffing
+        # store=0 means don't store packets in memory (saves RAM)
+        sniff(prn=packet_callback, store=0, count=20)
+        
+    except KeyboardInterrupt:
+        print("\n\n" + "="*70)
+        print("🛑 Sniffer stopped by user")
+        print("="*70)
+    except PermissionError:
+        print("\n❌ ERROR: Permission denied!")
+        print("💡 Solution:")
+        print("   Windows: Run Command Prompt as Administrator")
+        print("   Linux/Mac: Run with sudo (sudo python3 network_sniffer.py)")
+    except Exception as e:
+        print(f"\n❌ ERROR: {e}")
 
+
+if __name__ == "__main__":
+    main()
 
