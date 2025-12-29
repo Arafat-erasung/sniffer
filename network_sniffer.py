@@ -48,7 +48,7 @@ def packet_callback(packet):
                 print(f"   Service:          FTP (File Transfer)")
 
     #check for UDP
-    if packet.haslayer(UDP):
+    elif packet.haslayer(UDP):
         udp_layer = packet[UDP]
         print(f"\n🟢 UDP Packet Detected")
         print(f"   Source Port:      {udp_layer.sport}")
@@ -58,6 +58,19 @@ def packet_callback(packet):
               print(f"   Service:          DNS (Domain Name System)")
         elif   udp_layer.dport == 67 or udp_layer.sport == 67:
               print(f"   Service:          DHCP (Dynamic Host Config)")
+    
+    
+    #check for ICMP packets
+    elif packet.haslayer(ICMP):
+        icmp_layer = packet[ICMP]
+        print(f"\n🔴 ICMP Packet Detected")
+        print(f"   Type:             {icmp_layer.type}")
+        print(f"   Code:             {icmp_layer.code}")
+        if icmp_layer.type == 8:
+              print(f"   Message:          Echo Request (Ping)")
+        elif icmp_layer.type == 0:
+              print(f"   Message:          Echo Request (Pong)")
+
         
   
 
