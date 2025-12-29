@@ -18,6 +18,8 @@ def packet_callback(packet):
     print(f"[{timestamp}] PACKET CAPTURED")
     print("="*70)
 
+
+    #check for IP layers
     if packet.haslayer(IP):
         ip_layer = packet[IP]
 
@@ -25,3 +27,27 @@ def packet_callback(packet):
         print(f"Destination IP: {ip_layer.dst}")
         print(f"Protocol:       {ip_layer.proto}")
         print(f"Packet Length:  {len(packet)} bytes")
+
+    #check for TCP layer packets
+    if packet.haslayer(TCP):
+        tcp_layer = packet[TCP]
+
+        print(f"\n🔵 TCP Packet Detected")
+        print(f"   Source Port:      {tcp_layer.sport}")
+        print(f"   Destination Port: {tcp_layer.dport}")
+        print(f"   Flags:            {tcp_layer.flags}")
+
+    #identify packets
+    if tcp_layer.dport == 80 or tcp_layer.sport == 80:
+        print(f"    Service:                HTTP (Web Traffic)")
+    elif tcp_layer.dport == 443 or tcp_layer.sport == 443:
+        print(f"    Service:                HTTPS (Secure Web)")
+    elif tcp_layer.dport == 22 or tcp_layer.sport == 22:
+                print(f"   Service:          SSH (Secure Shell)")
+    elif tcp_layer.dport == 21 or tcp_layer.sport == 21:
+                print(f"   Service:          FTP (File Transfer)")
+
+    #check for UDP
+  
+
+
